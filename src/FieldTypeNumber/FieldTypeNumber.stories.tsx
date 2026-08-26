@@ -1,35 +1,43 @@
-import { ChangeEvent, useState } from 'react';
-import { Story, Meta } from '@storybook/react/types-6-0';
-import FieldTypeNumber, { FieldTypeNumberProps } from './';
+import { useState, type ChangeEvent } from "react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import FieldTypeNumber, { type FieldTypeNumberProps } from "./";
 
-export default {
-  title: 'FieldTypeNumber',
+/** Numeric input with the shared field label / helper-text treatment. */
+const meta = {
+  title: "Field Types/FieldTypeNumber",
   component: FieldTypeNumber,
-  argType: {},
-} as Meta;
+  parameters: { layout: "padded" },
+} satisfies Meta<typeof FieldTypeNumber>;
 
-const Template: Story<FieldTypeNumberProps> = (args) => {
-  const [value, setValue] = useState('0');
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
-  }
+const Controlled = (args: FieldTypeNumberProps) => {
+  const [value, setValue] = useState("0");
 
   return (
     <FieldTypeNumber
       {...args}
       value={value}
-      onChange={handleOnChange}
+      onChange={(e: ChangeEvent<HTMLInputElement>) => setValue(e.target.value)}
     />
   );
 };
 
-export const Default = Template.bind({});
-Default.args = {
-  placeholder: 'Placeholder Text...',
-  label: 'Number label',
-  helperText: 'Number helper text',
+export const Default: Story = {
+  render: (args) => <Controlled {...args} />,
+  args: {
+    placeholder: "Placeholder Text...",
+    label: "Number label",
+    helperText: "Number helper text",
+  },
 };
 
-
-
+export const WithError: Story = {
+  render: (args) => <Controlled {...args} />,
+  args: {
+    label: "Number label",
+    helperText: "Must be a positive number",
+    error: true,
+  },
+};

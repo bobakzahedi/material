@@ -11,17 +11,21 @@ There is no application to run — it is a library. The only way to view/interac
 ## Commands
 
 ```bash
+npm install              # required first — nothing runs without node_modules
 npm run storybook        # Dev: launch Storybook on port 6006 (the primary dev loop)
+npm run typecheck        # tsc over src + .storybook (no emit) — use this to check stories
 npm run build            # npm ci && tsc — type-checks and emits ES modules to es/
-npm run build-storybook  # Static Storybook build
+npm run build-storybook  # Static Storybook build into storybook-static/
 npm run deploy           # build-storybook + publish to GitHub Pages
 npm run release          # build + npm publish --access public
 npm run release:alpha    # build + publish under the `alpha` dist-tag
 ```
 
+Storybook 10 with the Vite builder. Requires Node >= 20.19 (or >= 22.12), per Vite's engines field.
+
 There are **no tests** — `npm test` is a placeholder (`echo 'add tests'`). Do not assume a test runner exists.
 
-`tsc` runs in `strict` mode and Storybook type-checks via `react-docgen-typescript`, so type errors surface in both the build and the Storybook dev server.
+`tsc` runs in `strict` mode. Two tsconfigs: `tsconfig.json` is the **build** config (emits `es/`, excludes `*.stories.tsx`), and `tsconfig.storybook.json` is the **check-everything** config used by `npm run typecheck` — it adds the stories and `.storybook/` and uses `Bundler` module resolution, which Storybook 10's subpath `exports` require. Storybook itself does not block on type errors; run `npm run typecheck` before pushing.
 
 ## Architecture & conventions
 
@@ -37,10 +41,16 @@ There are **no tests** — `npm test` is a placeholder (`echo 'add tests'`). Do 
 
 **Module augmentation is load-bearing.** The library extends MUI's TypeScript types in two places: `src/declarations.d.ts` and inline `declare module "@mui/material/..."` blocks in `theme/index.tsx`. These add custom palette colors (`blue`, `green`, `red`, `yellow`, `border`, etc.), the `body3` typography variant, and custom component sizes (`xsmall`/`xxsmall` on `IconButton`, `xsmall` on `Button`). If you reference a custom token, the corresponding augmentation must exist or `strict` `tsc` will fail.
 
-**Storybook** (`.storybook/`). All stories are wrapped in the library's `theme` via the `ThemeProvider` decorator in `preview.js`, so stories render exactly as consumers will see them. Stories follow the CSF `Template.bind({})` + `.args` pattern.
+**Storybook** (`.storybook/`). Storybook 10 on `@storybook/react-vite`. `main.ts` declares the framework and the `react-docgen-typescript` props-table settings; `preview.tsx` wraps every story in the library's own MUI `ThemeProvider` + `CssBaseline`, so stories render exactly as consumers will see them, and exposes a **Theme** toolbar control that swaps `theme` for `darkTheme`. `preview-head.html` loads the Mulish webfont the typography scale expects.
+
+`@storybook/react-vite` does **not** apply `@vitejs/plugin-react` itself — the root `vite.config.ts` supplies it, and Storybook merges that config in. Don't delete `vite.config.ts` just because there's no app to build.
+
+Stories use **CSF3**: a `satisfies Meta<typeof X>` default export and named `StoryObj` exports. Where a story needs state (most of the `FieldType*` inputs are controlled), define a small `Controlled` component in the story file and call it from `render` — don't put hooks directly in `render`. Titles are grouped: `Theme`, `Icons`, `Components/*`, `Field Types/*`; the sort order lives in `preview.tsx`. `src/Introduction.mdx` is the landing page.
 
 ## Gotchas
 
 - `package.json` `main` points at `./cjs/index.js`, but `tsc` only emits ESM to `es/` (`module`/`types` fields). The CJS build path exists in `package.json` but is not produced by the documented scripts — verify before relying on CJS output.
 - `src/VitualizedAutocomplete/` is misspelled (missing "r") and is exported as `VirtualizedAutocomplete`. The directory name is intentional/historical — don't "fix" it without updating the import in `src/index.ts`.
 - The repo contains committed `.tgz` pack artifacts and a checked-in `es/` build output; these are generated, not source.
+- `react`/`react-dom` are **devDependencies with no matching `peerDependencies`**. A consumer installing this package gets no signal about which React it needs. Worth adding a `peerDependencies` block on the next release.
+- React is pinned to 18 rather than 19 because `@mui/x-data-grid-pro` / `@mui/x-date-pickers-pro` v7 do not support React 19 — that needs MUI X v8 first.
