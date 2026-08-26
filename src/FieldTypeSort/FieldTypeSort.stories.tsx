@@ -3,14 +3,14 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import FieldTypeSort, { type FieldTypeSortProps } from "./";
 
 /** Sort-order field used to position an item within a list. */
-const meta = {
+const meta: Meta<typeof FieldTypeSort> = {
   title: "Field Types/FieldTypeSort",
   component: FieldTypeSort,
   parameters: { layout: "padded" },
-} satisfies Meta<typeof FieldTypeSort>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof FieldTypeSort>;
 
 const Controlled = (args: FieldTypeSortProps) => {
   const [value, setValue] = useState("3");

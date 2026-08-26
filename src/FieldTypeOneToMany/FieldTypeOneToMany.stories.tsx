@@ -8,14 +8,14 @@ type Option = { component: string | ReactNode; value: string; inputLabel: string
  * Multi-relationship picker. Selections render as chips; options load lazily
  * on open, the same way they do in the content editor.
  */
-const meta = {
+const meta: Meta<typeof FieldTypeOneToMany> = {
   title: "Field Types/FieldTypeOneToMany",
   component: FieldTypeOneToMany,
   parameters: { layout: "padded" },
-} satisfies Meta<typeof FieldTypeOneToMany>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof FieldTypeOneToMany>;
 
 const Controlled = (args: FieldTypeOneToManyProps) => {
   const [value, setValue] = useState<Option[]>([]);

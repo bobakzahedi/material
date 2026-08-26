@@ -8,14 +8,14 @@ type Option = { component: string | ReactNode; value: string; inputLabel: string
  * Single-relationship picker. Options are fetched lazily on open, so this story
  * simulates a slow API to exercise the loading state and the virtualized list.
  */
-const meta = {
+const meta: Meta<typeof FieldTypeOneToOne> = {
   title: "Field Types/FieldTypeOneToOne",
   component: FieldTypeOneToOne,
   parameters: { layout: "padded" },
-} satisfies Meta<typeof FieldTypeOneToOne>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof FieldTypeOneToOne>;
 
 const NONE: Option = { component: "- None -", value: "0", inputLabel: "- None -" };
 

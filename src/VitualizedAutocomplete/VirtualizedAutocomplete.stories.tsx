@@ -11,14 +11,14 @@ type Option = { component: string | ReactNode; value: string; inputLabel: string
  * on. Handles very large option lists without dropping frames — this story
  * loads 1,000 options.
  */
-const meta = {
+const meta: Meta<typeof VirtualizedAutocomplete> = {
   title: "Components/VirtualizedAutocomplete",
   component: VirtualizedAutocomplete,
   parameters: { layout: "padded" },
-} satisfies Meta<typeof VirtualizedAutocomplete>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof VirtualizedAutocomplete>;
 
 const NONE: Option = { component: "- None -", value: "0", inputLabel: "- None -" };
 

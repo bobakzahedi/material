@@ -3,14 +3,14 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import FieldTypeColor, { type FieldTypeColorProps } from "./";
 
 /** Colour picker field — pairs a swatch trigger with a text value. */
-const meta = {
+const meta: Meta<typeof FieldTypeColor> = {
   title: "Field Types/FieldTypeColor",
   component: FieldTypeColor,
   parameters: { layout: "padded" },
-} satisfies Meta<typeof FieldTypeColor>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof FieldTypeColor>;
 
 const Controlled = (args: FieldTypeColorProps) => {
   const [value, setValue] = useState("");

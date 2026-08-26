@@ -7,14 +7,14 @@ import ConfirmDialog, { type ConfirmDialogProps } from ".";
  * Confirmation modal. `callback` receives `true` when the user confirms and
  * `false` when they dismiss; pass `children` to replace the default actions.
  */
-const meta = {
+const meta: Meta<typeof ConfirmDialog> = {
   title: "Components/ConfirmDialog",
   component: ConfirmDialog,
   parameters: { layout: "centered" },
-} satisfies Meta<typeof ConfirmDialog>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof ConfirmDialog>;
 
 const Launcher = (args: ConfirmDialogProps) => {
   const [open, setOpen] = useState(false);

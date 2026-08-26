@@ -3,14 +3,14 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import FieldTypeUrl, { type FieldTypeUrlProps } from "./";
 
 /** URL input, typically rendered full width inside content forms. */
-const meta = {
+const meta: Meta<typeof FieldTypeUrl> = {
   title: "Field Types/FieldTypeUrl",
   component: FieldTypeUrl,
   parameters: { layout: "padded" },
-} satisfies Meta<typeof FieldTypeUrl>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof FieldTypeUrl>;
 
 const Controlled = (args: FieldTypeUrlProps) => {
   const [value, setValue] = useState("");

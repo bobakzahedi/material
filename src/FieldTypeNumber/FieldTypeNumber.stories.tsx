@@ -3,14 +3,14 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import FieldTypeNumber, { type FieldTypeNumberProps } from "./";
 
 /** Numeric input with the shared field label / helper-text treatment. */
-const meta = {
+const meta: Meta<typeof FieldTypeNumber> = {
   title: "Field Types/FieldTypeNumber",
   component: FieldTypeNumber,
   parameters: { layout: "padded" },
-} satisfies Meta<typeof FieldTypeNumber>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof FieldTypeNumber>;
 
 const Controlled = (args: FieldTypeNumberProps) => {
   const [value, setValue] = useState("0");

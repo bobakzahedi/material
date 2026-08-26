@@ -47,10 +47,15 @@ There are **no tests** — `npm test` is a placeholder (`echo 'add tests'`). Do 
 
 Stories use **CSF3**: a `satisfies Meta<typeof X>` default export and named `StoryObj` exports. Where a story needs state (most of the `FieldType*` inputs are controlled), define a small `Controlled` component in the story file and call it from `render` — don't put hooks directly in `render`. Titles are grouped: `Theme`, `Icons`, `Components/*`, `Field Types/*`; the sort order lives in `preview.tsx`. `src/Introduction.mdx` is the landing page.
 
+**Themed-MUI coverage** (`src/theme/stories/`). The theme restyles 45 MUI components; those stories live in `src/theme/stories/`, grouped by MUI's own categories (`MUI/Inputs`, `MUI/Data Display`, `MUI/Feedback`, `MUI/Surfaces`, `MUI/Navigation`, `MUI/MUI X`, `MUI/Baseline`). They render plain MUI components with nothing wrapped, so a `styleOverrides` regression shows up visually. **If you add a `Mui*` key to `theme/index.tsx`, add it to the matching page.** That folder is excluded from the `es/` build alongside `*.stories.tsx`, so `StorySection.tsx` can be shared without shipping.
+
+`legacyTheme` is documented under `Theme/Legacy`. Those stories mount their own `ThemeProvider`, so the toolbar Theme control does not affect them.
+
 ## Gotchas
 
 - `package.json` `main` points at `./cjs/index.js`, but `tsc` only emits ESM to `es/` (`module`/`types` fields). The CJS build path exists in `package.json` but is not produced by the documented scripts — verify before relying on CJS output.
 - `src/VitualizedAutocomplete/` is misspelled (missing "r") and is exported as `VirtualizedAutocomplete`. The directory name is intentional/historical — don't "fix" it without updating the import in `src/index.ts`.
 - The repo contains committed `.tgz` pack artifacts and a checked-in `es/` build output; these are generated, not source.
+- DataGrid Pro and the Pro date pickers render a "MUI X Missing license key" watermark in the `MUI/MUI X` stories. That is the unlicensed-dev-build watermark, not a theme bug.
 - `react`/`react-dom` are **devDependencies with no matching `peerDependencies`**. A consumer installing this package gets no signal about which React it needs. Worth adding a `peerDependencies` block on the next release.
 - React is pinned to 18 rather than 19 because `@mui/x-data-grid-pro` / `@mui/x-date-pickers-pro` v7 do not support React 19 — that needs MUI X v8 first.

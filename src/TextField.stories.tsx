@@ -13,14 +13,14 @@ import { Close, Search } from "@mui/icons-material";
  * MUI's TextField as restyled by the Zesty theme. Nothing is wrapped here —
  * this story exists so theme changes to inputs are visible in one place.
  */
-const meta = {
+const meta: Meta<typeof TextField> = {
   title: "Components/TextField",
   component: TextField,
   parameters: { layout: "padded" },
-} satisfies Meta<typeof TextField>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof TextField>;
 
 const Controlled = (args: TextFieldProps) => {
   const [value, setValue] = useState("");

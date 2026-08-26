@@ -71,6 +71,7 @@ const preview: Preview = {
           "Icons",
           "Components",
           "Field Types",
+          "MUI",
           "*",
         ],
       },

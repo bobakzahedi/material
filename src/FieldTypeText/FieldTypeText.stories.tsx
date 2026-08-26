@@ -8,14 +8,14 @@ import { Brain } from "../icons/Brain";
  * A single-line (or multiline) text input built on MUI's TextField, with the
  * label, helper text and end-adornment conventions used across Zesty apps.
  */
-const meta = {
+const meta: Meta<typeof FieldTypeText> = {
   title: "Field Types/FieldTypeText",
   component: FieldTypeText,
   parameters: { layout: "padded" },
-} satisfies Meta<typeof FieldTypeText>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof FieldTypeText>;
 
 /** Keeps the input controlled so typing works inside the story canvas. */
 const Controlled = (args: FieldTypeTextProps) => {

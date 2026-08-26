@@ -21,5 +21,9 @@
   "include": ["src"],
   // Stories are dev-only — keeping them out of the emit means they are not
   // published in `es/`. They are still type-checked via tsconfig.storybook.json.
-  "exclude": ["src/**/*.stories.tsx", "src/**/*.mdx"]
+  "exclude": [
+    "src/**/*.stories.tsx",
+    "src/**/*.mdx",
+    "src/theme/stories"
+  ]
 }
