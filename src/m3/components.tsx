@@ -465,6 +465,69 @@ export const buildM3Components = (s: M3Scheme): Components<Theme> => {
       styleOverrides: { root: { color: s.primary, textDecorationColor: "inherit" } },
     },
 
+    // ---- Progress ----------------------------------------------------------
+    // M3's linear indicator is a 4dp fully-rounded bar on a secondaryContainer
+    // track, with a "stop indicator" dot at the end of determinate progress.
+    //
+    // Two parts of the spec are NOT reproduced here because they need DOM that
+    // MUI does not render: the 4dp gap between the active indicator and the
+    // track, and the track arc on the determinate circular indicator. Both
+    // would require a custom component rather than styleOverrides.
+    MuiLinearProgress: {
+      styleOverrides: {
+        root: {
+          height: 4,
+          borderRadius: m3Shape.full,
+          backgroundColor: s.secondaryContainer,
+        },
+        // The stop indicator applies to determinate progress only.
+        determinate: {
+          "&::after": {
+            content: '""',
+            position: "absolute",
+            top: 0,
+            right: 0,
+            width: 4,
+            height: 4,
+            borderRadius: "50%",
+            backgroundColor: s.primary,
+          },
+        },
+        bar: {
+          borderRadius: m3Shape.full,
+          backgroundColor: s.primary,
+        },
+      },
+    },
+
+    MuiCircularProgress: {
+      // M3 specifies a 4dp stroke. Size is left at MUI's 40px rather than M3's
+      // 48dp default: forcing it would resize every existing call site,
+      // including the spinner inside Backdrop.
+      defaultProps: { thickness: 4 },
+      styleOverrides: {
+        root: { color: s.primary },
+        circle: { strokeLinecap: "round" },
+      },
+    },
+
+    // M3 snackbar: inverseSurface container, inverseOnSurface label,
+    // inversePrimary action, 4dp corners.
+    MuiSnackbarContent: {
+      styleOverrides: {
+        root: {
+          ...m3TypeScale.bodyMedium,
+          borderRadius: m3Shape.extraSmall,
+          backgroundColor: s.inverseSurface,
+          color: s.inverseOnSurface,
+        },
+        action: {
+          ...m3TypeScale.labelLarge,
+          color: s.inversePrimary,
+        },
+      },
+    },
+
     MuiSlider: {
       styleOverrides: {
         root: { color: s.primary, height: 4 },
