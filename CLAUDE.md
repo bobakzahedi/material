@@ -45,6 +45,8 @@ That package ships `"type": "module"` with extensionless internal imports, which
 
 M3 ships no success/warning/info roles. They are generated as M3 **custom colours** (`CUSTOM_COLORS` in the generator) sourced from the legacy theme's semantic colours and harmonised toward the seed with `blend: true`, so green still means success. Do not map them onto tertiary/secondary — every M3 accent role sits at the same tone, so a "success" borrowed from tertiary differs from primary only in hue, and at tertiary's low chroma it does not read as a state change at all.
 
+**Paper is inherited by Card, Dialog, Menu, Accordion and AppBar.** M3 gives `MuiPaper` a 12px radius and a `surfaceContainerLow` ground, so anything built on Paper picks both up. `MuiAppBar` overrides them back to square-edged on `surface` — a top app bar is full-bleed. If you add a Paper-based component that should not be rounded, it needs the same treatment.
+
 Two parts of the M3 progress spec are **deliberately not implemented**: the 4dp gap between a linear indicator's active bar and its track, and the track arc on the determinate circular indicator. Both need DOM that MUI does not render, so they would require a custom component rather than `styleOverrides`. Everything else (4dp height, pill caps, secondaryContainer track, the determinate stop-indicator dot, 4dp stroke, round caps) is in place.
 
 `m3/components.tsx` builds its overrides from the resolved colour scheme rather than reading `theme.palette`, so the full M3 role set is available without pretending every MUI theme carries it. `Button` gains typed `tonal` and `elevated` variants; the M3 type scale is registered as `displayLarge`…`labelSmall` Typography variants *and* mapped onto MUI's built-ins.

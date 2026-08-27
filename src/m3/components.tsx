@@ -43,6 +43,26 @@ export const buildM3Components = (s: M3Scheme): Components<Theme> => {
       },
     },
 
+    // AppBar is a Paper, so without this it inherits the 12px Paper radius —
+    // a top app bar is full-bleed and square-edged. M3's small top app bar sits
+    // on `surface` at elevation 0, with onSurface text.
+    //
+    // `color: "default"` is set as the default prop because M3's top app bar is
+    // surface-coloured, not primary. Passing color="primary" still works.
+    MuiAppBar: {
+      defaultProps: { elevation: 0, color: "default" },
+      styleOverrides: {
+        root: {
+          borderRadius: 0,
+          backgroundImage: "none",
+        },
+        colorDefault: {
+          backgroundColor: s.surface,
+          color: s.onSurface,
+        },
+      },
+    },
+
     // ---- Buttons -----------------------------------------------------------
     // M3 buttons are pill-shaped and come in five styles. MUI ships three of
     // them (contained/outlined/text); `tonal` and `elevated` are added here and
