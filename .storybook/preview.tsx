@@ -4,14 +4,29 @@ import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme, darkTheme } from "../src/theme";
+import { m3Theme, m3DarkTheme } from "../src/m3";
 
 /**
- * Every story renders inside the library's own ThemeProvider, so what you see
- * in Storybook is what consumers of `@zesty-io/material` get. The toolbar
- * switch below flips between the exported `theme` and `darkTheme`.
+ * Two independent axes: which theme family, and which colour mode. Keeping
+ * them separate means you can hold the mode steady while flipping the family,
+ * which is the comparison that matters when porting a component to M3.
+ *
+ * Note this is about the two *current* families. The separate `legacyTheme`
+ * export (Theme/Legacy v1) is older still and mounts its own provider, so it
+ * ignores both controls.
  */
+const THEMES = {
+  legacy: { light: theme, dark: darkTheme },
+  m3: { light: m3Theme, dark: m3DarkTheme },
+} as const;
+
+type Family = keyof typeof THEMES;
+type Mode = "light" | "dark";
+
 const withZestyTheme: Decorator = (Story, context) => {
-  const activeTheme = context.globals.theme === "dark" ? darkTheme : theme;
+  const family = (context.globals.family ?? "legacy") as Family;
+  const mode = (context.globals.mode ?? "light") as Mode;
+  const activeTheme = (THEMES[family] ?? THEMES.legacy)[mode];
 
   return (
     <ThemeProvider theme={activeTheme}>
@@ -34,10 +49,22 @@ const preview: Preview = {
   decorators: [withZestyTheme],
 
   globalTypes: {
-    theme: {
-      description: "Zesty theme",
+    family: {
+      description: "Theme family",
       toolbar: {
         title: "Theme",
+        icon: "component",
+        items: [
+          { value: "legacy", title: "Legacy" },
+          { value: "m3", title: "M3" },
+        ],
+        dynamicTitle: true,
+      },
+    },
+    mode: {
+      description: "Colour mode",
+      toolbar: {
+        title: "Mode",
         icon: "paintbrush",
         items: [
           { value: "light", icon: "sun", title: "Light" },
@@ -49,7 +76,8 @@ const preview: Preview = {
   },
 
   initialGlobals: {
-    theme: "light",
+    family: "legacy",
+    mode: "light",
   },
 
   parameters: {
@@ -68,6 +96,7 @@ const preview: Preview = {
         order: [
           "Introduction",
           "Theme",
+          "M3",
           "Icons",
           "Components",
           "Field Types",

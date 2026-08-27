@@ -37,6 +37,14 @@ There are **no tests** — `npm test` is a placeholder (`echo 'add tests'`). Do 
 
 **Icons** (`src/icons/`). Each icon is a named-export functional component wrapping MUI's `<SvgIcon {...props}>` with a single `<path>`. New icons must be added to `src/icons/index.ts`, which is re-exported wholesale via `export * from "./icons"` in `src/index.ts`. Keep icons as pass-through `SvgIconProps` so they inherit theme sizing/color.
 
+**Two theme families.** `theme`/`darkTheme` (labelled **Legacy** in the Storybook toolbar) and `m3Theme`/`m3DarkTheme` (**M3**). The toolbar has two independent controls — family and colour mode — so you can hold one steady while changing the other. The separate `legacyTheme` export is older than both and mounts its own provider.
+
+**M3** (`src/m3/`). Material 3 generated from the Zesty brand seed `#FF5D0A`. `tokens.ts` is **generated and committed** — produced by `scripts/generate-m3-tokens.mjs` via Google's `@material/material-color-utilities`. Do not hand-edit it. To rebrand: change `SEED` in the script, run `npm run gen:m3`, commit the diff. Day-to-day work never runs the generator, so the dependency is not needed to build or run Storybook.
+
+That package ships `"type": "module"` with extensionless internal imports, which bare Node ESM cannot resolve — `scripts/m3-loader.mjs` is a narrow resolve hook that retries those with `.js`. Without it the generator throws `ERR_MODULE_NOT_FOUND` from inside the package.
+
+`m3/components.tsx` builds its overrides from the resolved colour scheme rather than reading `theme.palette`, so the full M3 role set is available without pretending every MUI theme carries it. `Button` gains typed `tonal` and `elevated` variants; the M3 type scale is registered as `displayLarge`…`labelSmall` Typography variants *and* mapped onto MUI's built-ins.
+
 **Theme** (`src/theme/`). `theme/index.tsx` builds the exported `theme` (light) and `darkTheme` via MUI's `createTheme`, composed from `palette.ts` and `typography.ts`. This file is large and is mostly per-MUI-component `styleOverrides`/`variants`/`defaultProps` — it is the central place that defines the library's visual language (border radii, the custom `border` palette color, brand color scales like `blue`/`green`/`red`, etc.). `LegacyTheme/` exports the older `legacyTheme` for backwards compatibility.
 
 **Module augmentation is load-bearing.** The library extends MUI's TypeScript types in two places: `src/declarations.d.ts` and inline `declare module "@mui/material/..."` blocks in `theme/index.tsx`. These add custom palette colors (`blue`, `green`, `red`, `yellow`, `border`, etc.), the `body3` typography variant, and custom component sizes (`xsmall`/`xxsmall` on `IconButton`, `xsmall` on `Button`). If you reference a custom token, the corresponding augmentation must exist or `strict` `tsc` will fail.
@@ -49,7 +57,7 @@ Stories use **CSF3**: a `satisfies Meta<typeof X>` default export and named `Sto
 
 **Themed-MUI coverage** (`src/theme/stories/`). The theme restyles 45 MUI components; those stories live in `src/theme/stories/`, grouped by MUI's own categories (`MUI/Inputs`, `MUI/Data Display`, `MUI/Feedback`, `MUI/Surfaces`, `MUI/Navigation`, `MUI/MUI X`, `MUI/Baseline`). They render plain MUI components with nothing wrapped, so a `styleOverrides` regression shows up visually. **If you add a `Mui*` key to `theme/index.tsx`, add it to the matching page.** That folder is excluded from the `es/` build alongside `*.stories.tsx`, so `StorySection.tsx` can be shared without shipping.
 
-`legacyTheme` is documented under `Theme/Legacy`. Those stories mount their own `ThemeProvider`, so the toolbar Theme control does not affect them.
+`legacyTheme` is documented under `Theme/Legacy v1`. Those stories mount their own `ThemeProvider`, so the toolbar Theme control does not affect them.
 
 ## Gotchas
 

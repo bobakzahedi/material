@@ -16,11 +16,12 @@ import legacyTheme from ".";
  * `legacyTheme` is still exported from the package for apps that have not moved
  * to the current `theme`. It is frozen — document it, don't extend it.
  *
- * These stories mount their own `ThemeProvider`, so the Theme control in the
- * toolbar does not affect this page.
+ * Not to be confused with the **Legacy** option in the toolbar, which is the
+ * current `theme`. This one is older still. These stories mount their own
+ * `ThemeProvider`, so neither toolbar control affects this page.
  */
 const meta: Meta = {
-  title: "Theme/Legacy",
+  title: "Theme/Legacy v1",
   parameters: { layout: "padded" },
 };
 
