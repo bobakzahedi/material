@@ -2,9 +2,13 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { FormControl, FormControlLabel, FormHelperText, FormLabel, Radio, RadioGroup } from "@mui/material";
 import { Section } from "./StorySection";
 
-/** Also covers `MuiFormLabel` and `MuiFormHelperText` in their group context. */
+/**
+ * Radios are always used as a group — mui.com files this under "Radio Group"
+ * for that reason. Also covers `MuiFormLabel` and `MuiFormHelperText` in their
+ * group context.
+ */
 const meta: Meta<typeof Radio> = {
-  title: "MUI/Inputs/Radio",
+  title: "MUI/Inputs/Radio Group",
   component: Radio,
   parameters: { layout: "padded" },
 };

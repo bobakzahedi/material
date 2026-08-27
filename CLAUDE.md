@@ -63,6 +63,8 @@ Most of these are components the theme restyles — all 45 `Mui*` keys in `theme
 
 `src/theme/stories/` is excluded from the `es/` build alongside `*.stories.tsx`, so `StorySection.tsx` is shared between pages without shipping.
 
+Two pages document *patterns* rather than exported components, because MUI does the same: `MUI/Inputs/Transfer List` is composed from Card/List/Checkbox/Button, and `MUI/Inputs/Number Field` is `TextField type="number"` — MUI ships no NumberField, its docs page composes Base UI's and targets v9.
+
 The top-level **Icons** section is the Zesty icon set; `MUI/Data Display/Icons` is MUI's `SvgIcon` and `@mui/icons-material`. They are different things — don't merge them.
 
 `legacyTheme` is documented under `Theme/Legacy v1`. Those stories mount their own `ThemeProvider`, so the toolbar Theme control does not affect them.
