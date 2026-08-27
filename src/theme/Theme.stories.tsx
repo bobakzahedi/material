@@ -13,6 +13,9 @@ import {
  * A living reference for the exported `theme` and `darkTheme`. Use the Theme
  * control in the toolbar to switch between them — everything on this page
  * reads from whichever theme is active.
+ *
+ * The type scale now lives at **MUI → Data Display → Typography**, which
+ * follows the same control.
  */
 const meta = {
   title: "Theme",
@@ -69,8 +72,7 @@ const PaletteGroup = ({
 };
 
 /** Every colour group on the palette, including the Zesty brand scales. */
-export const Palette: Story = {
-  render: () => {
+const PaletteSpecimen = () => {
     const theme = useTheme<Theme>();
     const groups = Object.entries(theme.palette).filter(
       ([, value]) => value && typeof value === "object"
@@ -83,55 +85,14 @@ export const Palette: Story = {
         ))}
       </Stack>
     );
-  },
 };
 
-const VARIANTS = [
-  "h1",
-  "h2",
-  "h3",
-  "h4",
-  "h5",
-  "h6",
-  "subtitle1",
-  "subtitle2",
-  "body1",
-  "body2",
-  "body3",
-  "button",
-  "caption",
-  "overline",
-] as const;
-
-/** The type scale, including the custom `body3` variant this library adds. */
-export const Typographies: Story = {
-  name: "Typography",
-  render: () => {
-    const theme = useTheme<Theme>();
-
-    return (
-      <Stack spacing={3} divider={<Divider flexItem />}>
-        {VARIANTS.map((variant) => {
-          const style = (theme.typography as Record<string, any>)[variant] ?? {};
-          return (
-            <Stack key={variant} spacing={0.5}>
-              <Typography variant="caption" color="text.secondary">
-                {variant} — {style.fontSize ?? "inherit"} / {style.lineHeight ?? "inherit"}
-              </Typography>
-              <Typography variant={variant}>
-                The quick brown fox jumps over the lazy dog
-              </Typography>
-            </Stack>
-          );
-        })}
-      </Stack>
-    );
-  },
+export const Palette: Story = {
+  render: () => <PaletteSpecimen />,
 };
 
 /** Border radii, elevations and spacing as configured in `theme/index.tsx`. */
-export const Shape: Story = {
-  render: () => {
+const ShapeSpecimen = () => {
     const theme = useTheme<Theme>();
 
     return (
@@ -178,12 +139,14 @@ export const Shape: Story = {
         </Stack>
       </Stack>
     );
-  },
+};
+
+export const Shape: Story = {
+  render: () => <ShapeSpecimen />,
 };
 
 /** The whole theme object, for when you need to look up an exact token. */
-export const Raw: Story = {
-  render: () => {
+const RawTokens = () => {
     const theme = useTheme<Theme>();
 
     return (
@@ -209,5 +172,8 @@ export const Raw: Story = {
         )}
       </Box>
     );
-  },
+};
+
+export const Raw: Story = {
+  render: () => <RawTokens />,
 };

@@ -57,7 +57,13 @@ M3 ships no success/warning/info roles. They are generated as M3 **custom colour
 
 Stories use **CSF3**: a `satisfies Meta<typeof X>` default export and named `StoryObj` exports. Where a story needs state (most of the `FieldType*` inputs are controlled), define a small `Controlled` component in the story file and call it from `render` — don't put hooks directly in `render`. Titles are grouped: `Theme`, `Icons`, `Components/*`, `Field Types/*`; the sort order lives in `preview.tsx`. `src/Introduction.mdx` is the landing page.
 
-**Themed-MUI coverage** (`src/theme/stories/`). The theme restyles 45 MUI components; those stories live in `src/theme/stories/`, grouped by MUI's own categories (`MUI/Inputs`, `MUI/Data Display`, `MUI/Feedback`, `MUI/Surfaces`, `MUI/Navigation`, `MUI/MUI X`, `MUI/Baseline`). They render plain MUI components with nothing wrapped, so a `styleOverrides` regression shows up visually. **If you add a `Mui*` key to `theme/index.tsx`, add it to the matching page.** That folder is excluded from the `es/` build alongside `*.stories.tsx`, so `StorySection.tsx` can be shared without shipping.
+**MUI reference pages** (`src/theme/stories/`). One file per component, titled `MUI/<Category>/<Component>` following mui.com's own grouping: Inputs, Data Display, Feedback, Surfaces, Navigation, MUI X, Baseline. They render plain MUI components with nothing wrapped, so a `styleOverrides` regression shows up visually under whichever theme the toolbar has active.
+
+Most of these are components the theme restyles — all 45 `Mui*` keys in `theme/index.tsx` are represented, and **when you add a key, add it to the matching page**. A few (Avatar, Badge, Table) are *not* themed and are documented anyway, so it stays visible that they fall through to MUI defaults.
+
+`src/theme/stories/` is excluded from the `es/` build alongside `*.stories.tsx`, so `StorySection.tsx` is shared between pages without shipping.
+
+The top-level **Icons** section is the Zesty icon set; `MUI/Data Display/Icons` is MUI's `SvgIcon` and `@mui/icons-material`. They are different things — don't merge them.
 
 `legacyTheme` is documented under `Theme/Legacy v1`. Those stories mount their own `ThemeProvider`, so the toolbar Theme control does not affect them.
 
