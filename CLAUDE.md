@@ -61,7 +61,7 @@ Two parts of the M3 progress spec are **deliberately not implemented**: the 4dp 
 
 Stories use **CSF3**: a `satisfies Meta<typeof X>` default export and named `StoryObj` exports. Where a story needs state (most of the `FieldType*` inputs are controlled), define a small `Controlled` component in the story file and call it from `render` — don't put hooks directly in `render`. Titles are grouped: `Theme`, `Icons`, `Components/*`, `Field Types/*`; the sort order lives in `preview.tsx`. `src/Introduction.mdx` is the landing page.
 
-**MUI reference pages** (`src/theme/stories/`). One file per component, titled `MUI/<Category>/<Component>` following mui.com's own grouping: Inputs, Data Display, Feedback, Surfaces, Navigation, MUI X, Baseline. They render plain MUI components with nothing wrapped, so a `styleOverrides` regression shows up visually under whichever theme the toolbar has active.
+**MUI reference pages** (`src/theme/stories/`). One file per component, titled `MUI/<Category>/<Component>` following mui.com's own grouping: Layout, Inputs, Data Display, Feedback, Surfaces, Navigation, plus MUI X and Baseline. **Every category on mui.com is now covered** — when MUI adds a component, add the page here too. They render plain MUI components with nothing wrapped, so a `styleOverrides` regression shows up visually under whichever theme the toolbar has active.
 
 Most of these are components the theme restyles — all 45 `Mui*` keys in `theme/index.tsx` are represented, and **when you add a key, add it to the matching page**. A few (Avatar, Badge, Table) are *not* themed and are documented anyway, so it stays visible that they fall through to MUI defaults.
 

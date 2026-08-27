@@ -102,7 +102,16 @@ const preview: Preview = {
           "Field Types",
           // A child array must follow its parent entry directly.
           "MUI",
-          ["Inputs", "Data Display", "Feedback", "Surfaces", "Navigation", "MUI X", "Baseline"],
+          [
+            "Layout",
+            "Inputs",
+            "Data Display",
+            "Feedback",
+            "Surfaces",
+            "Navigation",
+            "MUI X",
+            "Baseline",
+          ],
           "*",
         ],
       },

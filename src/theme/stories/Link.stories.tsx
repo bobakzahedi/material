@@ -4,7 +4,7 @@ import { Section, Stacked } from "./StorySection";
 
 /** M3 colours links with `primary` and inherits the underline colour. */
 const meta: Meta<typeof Link> = {
-  title: "MUI/Data Display/Link",
+  title: "MUI/Navigation/Link",
   component: Link,
   parameters: { layout: "padded" },
 };
