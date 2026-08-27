@@ -39,7 +39,7 @@ There are **no tests** — `npm test` is a placeholder (`echo 'add tests'`). Do 
 
 **Two theme families.** `theme`/`darkTheme` (labelled **Legacy** in the Storybook toolbar) and `m3Theme`/`m3DarkTheme` (**M3**). The toolbar has two independent controls — family and colour mode — so you can hold one steady while changing the other. The separate `legacyTheme` export is older than both and mounts its own provider.
 
-**M3** (`src/m3/`). Material 3 generated from the Zesty brand seed `#FF5D0A`. `tokens.ts` is **generated and committed** — produced by `scripts/generate-m3-tokens.mjs` via Google's `@material/material-color-utilities`. Do not hand-edit it. To rebrand: change `SEED` in the script, run `npm run gen:m3`, commit the diff. Day-to-day work never runs the generator, so the dependency is not needed to build or run Storybook.
+**M3** (`src/m3/`). Material 3 generated from the brand seed `#4254BD`. Note this is *not* the legacy theme's primary (`#FF5D0A`) — M3 derives its entire harmony from one seed, so the two families are not expected to match. `tokens.ts` is **generated and committed** — produced by `scripts/generate-m3-tokens.mjs` via Google's `@material/material-color-utilities`. Do not hand-edit it. To rebrand: change `SEED` in the script, run `npm run gen:m3`, commit the diff. Day-to-day work never runs the generator, so the dependency is not needed to build or run Storybook.
 
 That package ships `"type": "module"` with extensionless internal imports, which bare Node ESM cannot resolve — `scripts/m3-loader.mjs` is a narrow resolve hook that retries those with `.js`. Without it the generator throws `ERR_MODULE_NOT_FOUND` from inside the package.
 

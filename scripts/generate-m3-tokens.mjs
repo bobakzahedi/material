@@ -46,8 +46,12 @@ try {
   process.exit(1);
 }
 
-/** Zesty brand orange — the same value as `palette.ts` primary.main. */
-const SEED = "#FF5D0A";
+/**
+ * The M3 brand seed. Deliberately independent of the legacy theme's
+ * `palette.ts` primary (#FF5D0A) — M3 derives its whole harmony from this one
+ * colour, so the two families are not expected to match.
+ */
+const SEED = "#4254BD";
 
 const OUT = resolve(
   dirname(fileURLToPath(import.meta.url)),
