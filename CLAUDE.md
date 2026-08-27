@@ -43,6 +43,8 @@ There are **no tests** — `npm test` is a placeholder (`echo 'add tests'`). Do 
 
 That package ships `"type": "module"` with extensionless internal imports, which bare Node ESM cannot resolve — `scripts/m3-loader.mjs` is a narrow resolve hook that retries those with `.js`. Without it the generator throws `ERR_MODULE_NOT_FOUND` from inside the package.
 
+M3 ships no success/warning/info roles. They are generated as M3 **custom colours** (`CUSTOM_COLORS` in the generator) sourced from the legacy theme's semantic colours and harmonised toward the seed with `blend: true`, so green still means success. Do not map them onto tertiary/secondary — every M3 accent role sits at the same tone, so a "success" borrowed from tertiary differs from primary only in hue, and at tertiary's low chroma it does not read as a state change at all.
+
 `m3/components.tsx` builds its overrides from the resolved colour scheme rather than reading `theme.palette`, so the full M3 role set is available without pretending every MUI theme carries it. `Button` gains typed `tonal` and `elevated` variants; the M3 type scale is registered as `displayLarge`…`labelSmall` Typography variants *and* mapped onto MUI's built-ins.
 
 **Theme** (`src/theme/`). `theme/index.tsx` builds the exported `theme` (light) and `darkTheme` via MUI's `createTheme`, composed from `palette.ts` and `typography.ts`. This file is large and is mostly per-MUI-component `styleOverrides`/`variants`/`defaultProps` — it is the central place that defines the library's visual language (border radii, the custom `border` palette color, brand color scales like `blue`/`green`/`red`, etc.). `LegacyTheme/` exports the older `legacyTheme` for backwards compatibility.

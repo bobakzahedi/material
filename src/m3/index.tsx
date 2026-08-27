@@ -77,9 +77,10 @@ declare module "@mui/material/styles" {
  * Maps M3 colour roles onto MUI's palette slots so unmodified MUI components
  * land on the right colours without knowing anything about M3.
  *
- * M3 has no "success"/"warning"/"info" — the convention used here borrows
- * tertiary for success and primary/secondary for warning/info, which keeps the
- * generated harmony intact rather than bolting on unrelated hues.
+ * M3 ships no success/warning/info roles. Rather than borrow tertiary for
+ * "success" — which yields a mauve carrying no semantic signal — those three are
+ * generated as M3 custom colours, harmonised toward the seed. See CUSTOM_COLORS
+ * in scripts/generate-m3-tokens.mjs.
  */
 const paletteFromScheme = (s: M3Scheme, mode: "light" | "dark") => ({
   mode,
@@ -87,9 +88,9 @@ const paletteFromScheme = (s: M3Scheme, mode: "light" | "dark") => ({
   primary: { main: s.primary, contrastText: s.onPrimary },
   secondary: { main: s.secondary, contrastText: s.onSecondary },
   error: { main: s.error, contrastText: s.onError },
-  warning: { main: s.tertiary, contrastText: s.onTertiary },
-  info: { main: s.secondary, contrastText: s.onSecondary },
-  success: { main: s.tertiary, contrastText: s.onTertiary },
+  warning: { main: s.warning, contrastText: s.onWarning },
+  info: { main: s.info, contrastText: s.onInfo },
+  success: { main: s.success, contrastText: s.onSuccess },
   background: { default: s.background, paper: s.surfaceContainerLow },
   text: {
     primary: s.onSurface,

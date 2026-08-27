@@ -109,6 +109,10 @@ const ROLE_GROUPS: Array<{ title: string; pairs: Array<[string, string?]> }> = [
     pairs: [["surfaceDim", "onSurface"], ["surface", "onSurface"], ["surfaceBright", "onSurface"], ["surfaceContainerLowest", "onSurface"], ["surfaceContainerLow", "onSurface"], ["surfaceContainer", "onSurface"], ["surfaceContainerHigh", "onSurface"], ["surfaceContainerHighest", "onSurface"], ["surfaceVariant", "onSurfaceVariant"], ["onSurfaceVariant", "surfaceVariant"]],
   },
   {
+    title: "Semantic (custom colours, harmonised to the seed)",
+    pairs: [["success", "onSuccess"], ["successContainer", "onSuccessContainer"], ["warning", "onWarning"], ["warningContainer", "onWarningContainer"], ["info", "onInfo"], ["infoContainer", "onInfoContainer"]],
+  },
+  {
     title: "Outline & inverse",
     pairs: [["outline"], ["outlineVariant"], ["inverseSurface", "inverseOnSurface"], ["inverseOnSurface", "inverseSurface"], ["inversePrimary"], ["scrim"]],
   },

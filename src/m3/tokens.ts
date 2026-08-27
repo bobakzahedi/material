@@ -202,7 +202,19 @@ export const m3LightScheme = {
   surfaceContainerLow: "#f6f2f7",
   surfaceContainer: "#f0edf1",
   surfaceContainerHigh: "#eae7ec",
-  surfaceContainerHighest: "#e4e1e6"
+  surfaceContainerHighest: "#e4e1e6",
+  success: "#006c53",
+  onSuccess: "#ffffff",
+  successContainer: "#6fface",
+  onSuccessContainer: "#002117",
+  warning: "#9c4400",
+  onWarning: "#ffffff",
+  warningContainer: "#ffdbca",
+  onWarningContainer: "#331200",
+  info: "#0060a9",
+  onInfo: "#ffffff",
+  infoContainer: "#d3e4ff",
+  onInfoContainer: "#001c38"
 } as const;
 
 /** Resolved M3 colour roles for the dark scheme. */
@@ -242,7 +254,19 @@ export const m3DarkScheme = {
   surfaceContainerLow: "#1b1b1f",
   surfaceContainer: "#1f1f23",
   surfaceContainerHigh: "#2a2a2d",
-  surfaceContainerHighest: "#353438"
+  surfaceContainerHighest: "#353438",
+  success: "#4eddb3",
+  onSuccess: "#00382a",
+  successContainer: "#00513e",
+  onSuccessContainer: "#6fface",
+  warning: "#ffb68f",
+  onWarning: "#542100",
+  warningContainer: "#773200",
+  onWarningContainer: "#ffdbca",
+  info: "#a2c9ff",
+  onInfo: "#00315b",
+  infoContainer: "#004881",
+  onInfoContainer: "#d3e4ff"
 } as const;
 
 // Values are widened to `string`: with `as const` the hex values become literal

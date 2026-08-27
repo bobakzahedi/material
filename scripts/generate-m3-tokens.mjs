@@ -58,7 +58,23 @@ const OUT = resolve(
   "../src/m3/tokens.ts"
 );
 
-const m3 = themeFromSourceColor(argbFromHex(SEED));
+/**
+ * M3 has no success / warning / info roles — it only ships primary, secondary,
+ * tertiary and error. Borrowing tertiary for "success" produces a mauve that
+ * carries no semantic signal, so these are declared as M3 *custom colours*
+ * instead. `blend: true` harmonises each one toward the seed, so they read as
+ * part of the same palette rather than bolted on.
+ *
+ * The source values are the legacy theme's semantic colours, which keeps the
+ * meaning ("green = success") consistent across both theme families.
+ */
+const CUSTOM_COLORS = [
+  { name: "success", value: argbFromHex("#12B76A"), blend: true },
+  { name: "warning", value: argbFromHex("#F79009"), blend: true },
+  { name: "info", value: argbFromHex("#0BA5EC"), blend: true },
+];
+
+const m3 = themeFromSourceColor(argbFromHex(SEED), CUSTOM_COLORS);
 const hex = (argb) => hexFromArgb(argb);
 const tone = (palette, t) => hex(palette.tone(t));
 
@@ -106,6 +122,14 @@ const buildScheme = (mode) => {
   for (const role of ROLES) out[role] = hex(scheme[role]);
   for (const [role, t] of Object.entries(SURFACE_TONES[mode])) {
     out[role] = tone(m3.palettes.neutral, t);
+  }
+  for (const group of m3.customColors) {
+    const name = group.color.name;
+    const Name = name[0].toUpperCase() + name.slice(1);
+    out[name] = hex(group[mode].color);
+    out[`on${Name}`] = hex(group[mode].onColor);
+    out[`${name}Container`] = hex(group[mode].colorContainer);
+    out[`on${Name}Container`] = hex(group[mode].onColorContainer);
   }
   return out;
 };

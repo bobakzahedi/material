@@ -420,9 +420,9 @@ export const buildM3Components = (s: M3Scheme): Components<Theme> => {
       styleOverrides: {
         root: { ...m3TypeScale.bodyMedium, borderRadius: m3Shape.medium },
         standardError: { backgroundColor: s.errorContainer, color: s.onErrorContainer },
-        standardInfo: { backgroundColor: s.secondaryContainer, color: s.onSecondaryContainer },
-        standardSuccess: { backgroundColor: s.tertiaryContainer, color: s.onTertiaryContainer },
-        standardWarning: { backgroundColor: s.primaryContainer, color: s.onPrimaryContainer },
+        standardInfo: { backgroundColor: s.infoContainer, color: s.onInfoContainer },
+        standardSuccess: { backgroundColor: s.successContainer, color: s.onSuccessContainer },
+        standardWarning: { backgroundColor: s.warningContainer, color: s.onWarningContainer },
       },
     },
 
