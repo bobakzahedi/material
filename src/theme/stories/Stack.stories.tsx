@@ -17,7 +17,7 @@ const meta: Meta<typeof Stack> = {
 export default meta;
 type Story = StoryObj<typeof Stack>;
 
-const Item = ({ children }: { children: React.ReactNode }) => (
+const Item = ({ children }: { children: ReactNode }) => (
   <Paper variant="outlined" sx={{ p: 2, textAlign: "center", minWidth: 72 }}>
     <Typography variant="body2">{children}</Typography>
   </Paper>
@@ -53,7 +53,10 @@ export const Direction: Story = {
 
 export const Spacing: Story = {
   render: () => (
-    <Stacked title="spacing" description="Multiples of theme.spacing, same scale as sx.">
+    <Stacked
+      title="spacing"
+      description="Multiples of theme.spacing, same scale as sx."
+    >
       <Stack spacing={3}>
         {[0, 1, 2, 4].map((spacing) => (
           <Box key={spacing}>
@@ -74,7 +77,10 @@ export const Spacing: Story = {
 
 export const Dividers: Story = {
   render: () => (
-    <Stacked title="divider" description="Inserted between children only — not at the ends.">
+    <Stacked
+      title="divider"
+      description="Inserted between children only — not at the ends."
+    >
       <Stack
         direction="row"
         spacing={2}
@@ -96,7 +102,10 @@ export const Responsive: Story = {
       title="Responsive direction"
       description="Column on xs, row from sm up. Resize the canvas to see it flip."
     >
-      <Stack direction={{ xs: "column", sm: "row" }} spacing={{ xs: 1, sm: 2, md: 4 }}>
+      <Stack
+        direction={{ xs: "column", sm: "row" }}
+        spacing={{ xs: 1, sm: 2, md: 4 }}
+      >
         <Item>1</Item>
         <Item>2</Item>
         <Item>3</Item>
@@ -119,7 +128,11 @@ export const Wrapping: Story = {
         <Typography variant="caption" color="text.secondary">
           without useFlexGap
         </Typography>
-        <Stack direction="row" spacing={2} sx={{ flexWrap: "wrap", maxWidth: 340 }}>
+        <Stack
+          direction="row"
+          spacing={2}
+          sx={{ flexWrap: "wrap", maxWidth: 340 }}
+        >
           {Array.from({ length: 7 }, (_, i) => (
             <Item key={i}>{i + 1}</Item>
           ))}
@@ -129,7 +142,12 @@ export const Wrapping: Story = {
         <Typography variant="caption" color="text.secondary">
           useFlexGap
         </Typography>
-        <Stack useFlexGap direction="row" spacing={2} sx={{ flexWrap: "wrap", maxWidth: 340 }}>
+        <Stack
+          useFlexGap
+          direction="row"
+          spacing={2}
+          sx={{ flexWrap: "wrap", maxWidth: 340 }}
+        >
           {Array.from({ length: 7 }, (_, i) => (
             <Item key={i}>{i + 1}</Item>
           ))}

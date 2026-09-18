@@ -70,20 +70,28 @@ const VARIANTS = [
 export const Palette: Story = {
   render: () => {
     const groups = Object.entries(legacyTheme.palette).filter(
-      ([, value]) => value && typeof value === "object"
+      ([, value]) => value && typeof value === "object",
     ) as Array<[string, Record<string, unknown>]>;
 
     return (
       <ThemeProvider theme={legacyTheme}>
-        <Box sx={{ bgcolor: "background.default", color: "text.primary", p: 3 }}>
+        <Box
+          sx={{ bgcolor: "background.default", color: "text.primary", p: 3 }}
+        >
           <Stack spacing={4} divider={<Divider flexItem />}>
             {groups.map(([name, group]) => {
-              const swatches = Object.entries(group).filter(([, v]) => isColor(v));
+              const swatches = Object.entries(group).filter(([, v]) =>
+                isColor(v),
+              );
               if (swatches.length === 0) return null;
               return (
                 <Stack key={name} spacing={1}>
                   <Typography variant="h6">{name}</Typography>
-                  <Stack direction="row" spacing={1.5} sx={{ flexWrap: "wrap", rowGap: 1.5 }}>
+                  <Stack
+                    direction="row"
+                    spacing={1.5}
+                    sx={{ flexWrap: "wrap", rowGap: 1.5 }}
+                  >
                     {swatches.map(([key, value]) => (
                       <Swatch key={key} name={key} value={value as string} />
                     ))}
@@ -105,11 +113,18 @@ export const Typographies: Story = {
       <Box sx={{ bgcolor: "background.default", color: "text.primary", p: 3 }}>
         <Stack spacing={3} divider={<Divider flexItem />}>
           {VARIANTS.map((variant) => {
-            const style = (legacyTheme.typography as Record<string, any>)[variant] ?? {};
+            const style =
+              (
+                legacyTheme.typography as unknown as Record<
+                  string,
+                  { fontSize?: string | number; lineHeight?: string | number }
+                >
+              )[variant] ?? {};
             return (
               <Stack key={variant} spacing={0.5}>
                 <Typography variant="caption" color="text.secondary">
-                  {variant} — {style.fontSize ?? "inherit"} / {style.lineHeight ?? "inherit"}
+                  {variant} — {style.fontSize ?? "inherit"} /{" "}
+                  {style.lineHeight ?? "inherit"}
                 </Typography>
                 <Typography variant={variant}>
                   The quick brown fox jumps over the lazy dog
@@ -131,7 +146,11 @@ export const Components: Story = {
         <Stack spacing={4}>
           <Stack spacing={1}>
             <Typography variant="h6">Button &amp; ButtonGroup</Typography>
-            <Stack direction="row" spacing={2} sx={{ flexWrap: "wrap", rowGap: 2 }}>
+            <Stack
+              direction="row"
+              spacing={2}
+              sx={{ flexWrap: "wrap", rowGap: 2 }}
+            >
               <Button variant="contained">Contained</Button>
               <Button variant="outlined">Outlined</Button>
               <Button variant="text">Text</Button>
@@ -148,8 +167,8 @@ export const Components: Story = {
           </Stack>
 
           <Alert severity="info">
-            legacyTheme overrides far fewer components than the current theme — most MUI
-            defaults come through untouched.
+            legacyTheme overrides far fewer components than the current theme —
+            most MUI defaults come through untouched.
           </Alert>
         </Stack>
       </Box>

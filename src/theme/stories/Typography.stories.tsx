@@ -1,5 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Box, Divider, Paper, Stack, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  Divider,
+  Paper,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import { Stacked } from "./StorySection";
 
 /**
@@ -20,14 +27,27 @@ export default meta;
 type Story = StoryObj<typeof Typography>;
 
 const VARIANTS = [
-  "h1", "h2", "h3", "h4", "h5", "h6",
-  "subtitle1", "subtitle2",
-  "body1", "body2", "body3",
-  "button", "caption", "overline",
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "h6",
+  "subtitle1",
+  "subtitle2",
+  "body1",
+  "body2",
+  "body3",
+  "button",
+  "caption",
+  "overline",
 ] as const;
 
 export const Default: Story = {
-  args: { variant: "body1", children: "The quick brown fox jumps over the lazy dog" },
+  args: {
+    variant: "body1",
+    children: "The quick brown fox jumps over the lazy dog",
+  },
 };
 
 /**
@@ -40,12 +60,22 @@ const ScaleSpecimen = () => {
   return (
     <Stack spacing={3} divider={<Divider flexItem />}>
       {VARIANTS.map((variant) => {
-        const style = (theme.typography as Record<string, any>)[variant] ?? {};
+        const style =
+          (
+            theme.typography as unknown as Record<
+              string,
+              {
+                fontSize?: string | number;
+                lineHeight?: string | number;
+                fontWeight?: string | number;
+              }
+            >
+          )[variant] ?? {};
         return (
           <Stack key={variant} spacing={0.5}>
             <Typography variant="caption" color="text.secondary">
-              {variant} — {style.fontSize ?? "inherit"} / {style.lineHeight ?? "inherit"} /{" "}
-              {style.fontWeight ?? "inherit"}
+              {variant} — {style.fontSize ?? "inherit"} /{" "}
+              {style.lineHeight ?? "inherit"} / {style.fontWeight ?? "inherit"}
             </Typography>
             <Typography variant={variant}>
               The quick brown fox jumps over the lazy dog
@@ -69,9 +99,13 @@ export const CustomVariant: Story = {
       title="body3"
       description="Registered through module augmentation in src/declarations.d.ts. Referencing it without that augmentation fails to compile."
     >
-      <Typography variant="body1">body1 — the default paragraph size</Typography>
+      <Typography variant="body1">
+        body1 — the default paragraph size
+      </Typography>
       <Typography variant="body2">body2 — one step down</Typography>
-      <Typography variant="body3">body3 — the extra step this library adds</Typography>
+      <Typography variant="body3">
+        body3 — the extra step this library adds
+      </Typography>
     </Stacked>
   ),
 };
@@ -82,8 +116,9 @@ export const Alignment: Story = {
       {(["left", "center", "right", "justify"] as const).map((align) => (
         <Paper key={align} variant="outlined" sx={{ p: 2 }}>
           <Typography align={align} variant="body2">
-            {align} — Material Design uses a typographic scale with a limited number of type
-            sizes that work well together along with the layout grid.
+            {align} — Material Design uses a typographic scale with a limited
+            number of type sizes that work well together along with the layout
+            grid.
           </Typography>
         </Paper>
       ))}
@@ -93,15 +128,20 @@ export const Alignment: Story = {
 
 export const Truncation: Story = {
   render: () => (
-    <Stacked title="noWrap" description="Truncates with an ellipsis instead of wrapping.">
+    <Stacked
+      title="noWrap"
+      description="Truncates with an ellipsis instead of wrapping."
+    >
       <Box sx={{ width: 280 }}>
         <Typography noWrap>
-          A single line that is far too long for its container and will be clipped
+          A single line that is far too long for its container and will be
+          clipped
         </Typography>
       </Box>
       <Box sx={{ width: 280 }}>
         <Typography>
-          The same string without noWrap, which wraps onto as many lines as it needs
+          The same string without noWrap, which wraps onto as many lines as it
+          needs
         </Typography>
       </Box>
     </Stacked>
@@ -132,13 +172,20 @@ export const SemanticElement: Story = {
 export const Colors: Story = {
   render: () => (
     <Stacked title="color">
-      {(["text.primary", "text.secondary", "text.disabled", "primary.main", "error.main", "success.main"] as const).map(
-        (color) => (
-          <Typography key={color} color={color}>
-            {color}
-          </Typography>
-        )
-      )}
+      {(
+        [
+          "text.primary",
+          "text.secondary",
+          "text.disabled",
+          "primary.main",
+          "error.main",
+          "success.main",
+        ] as const
+      ).map((color) => (
+        <Typography key={color} color={color}>
+          {color}
+        </Typography>
+      ))}
     </Stacked>
   ),
 };

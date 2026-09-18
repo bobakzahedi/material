@@ -3,6 +3,9 @@ import { TypographyVariantsOptions } from "@mui/material/styles";
 
 // Module augmentation
 declare module "@mui/material/styles" {
+  export interface TypographyVariants {
+    body3: CSSProperties;
+  }
   export interface TypographyVariantsOptions {
     body3?: CSSProperties;
   }

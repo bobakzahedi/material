@@ -17,7 +17,7 @@ const meta: Meta<typeof Grid> = {
 export default meta;
 type Story = StoryObj<typeof Grid>;
 
-const Cell = ({ children }: { children: React.ReactNode }) => (
+const Cell = ({ children }: { children: ReactNode }) => (
   <Paper variant="outlined" sx={{ p: 2, textAlign: "center" }}>
     <Typography variant="body2">{children}</Typography>
   </Paper>
@@ -117,7 +117,10 @@ export const Offset: Story = {
 /** The column count is configurable when 12 does not divide cleanly. */
 export const CustomColumns: Story = {
   render: () => (
-    <Stacked title="columns" description="A 10-column grid instead of the default 12.">
+    <Stacked
+      title="columns"
+      description="A 10-column grid instead of the default 12."
+    >
       <Grid container spacing={2} columns={10}>
         {Array.from({ length: 5 }, (_, i) => (
           <Grid key={i} size={2}>

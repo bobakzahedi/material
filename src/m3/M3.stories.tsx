@@ -39,7 +39,7 @@ const meta: Meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const useMode = (context: { globals: Record<string, unknown> }) =>
+const getMode = (context: { globals: Record<string, unknown> }) =>
   context.globals.mode === "dark" ? "dark" : "light";
 
 const M3Frame = ({
@@ -50,7 +50,14 @@ const M3Frame = ({
   children: ReactNode;
 }) => (
   <ThemeProvider theme={mode === "dark" ? m3DarkTheme : m3Theme}>
-    <Box sx={{ bgcolor: "background.default", color: "text.primary", p: 3, minHeight: "100%" }}>
+    <Box
+      sx={{
+        bgcolor: "background.default",
+        color: "text.primary",
+        p: 3,
+        minHeight: "100%",
+      }}
+    >
       {children}
     </Box>
   </ThemeProvider>
@@ -90,47 +97,96 @@ const RoleSwatch = ({
 const ROLE_GROUPS: Array<{ title: string; pairs: Array<[string, string?]> }> = [
   {
     title: "Primary",
-    pairs: [["primary", "onPrimary"], ["onPrimary", "primary"], ["primaryContainer", "onPrimaryContainer"], ["onPrimaryContainer", "primaryContainer"]],
+    pairs: [
+      ["primary", "onPrimary"],
+      ["onPrimary", "primary"],
+      ["primaryContainer", "onPrimaryContainer"],
+      ["onPrimaryContainer", "primaryContainer"],
+    ],
   },
   {
     title: "Secondary",
-    pairs: [["secondary", "onSecondary"], ["onSecondary", "secondary"], ["secondaryContainer", "onSecondaryContainer"], ["onSecondaryContainer", "secondaryContainer"]],
+    pairs: [
+      ["secondary", "onSecondary"],
+      ["onSecondary", "secondary"],
+      ["secondaryContainer", "onSecondaryContainer"],
+      ["onSecondaryContainer", "secondaryContainer"],
+    ],
   },
   {
     title: "Tertiary",
-    pairs: [["tertiary", "onTertiary"], ["onTertiary", "tertiary"], ["tertiaryContainer", "onTertiaryContainer"], ["onTertiaryContainer", "tertiaryContainer"]],
+    pairs: [
+      ["tertiary", "onTertiary"],
+      ["onTertiary", "tertiary"],
+      ["tertiaryContainer", "onTertiaryContainer"],
+      ["onTertiaryContainer", "tertiaryContainer"],
+    ],
   },
   {
     title: "Error",
-    pairs: [["error", "onError"], ["onError", "error"], ["errorContainer", "onErrorContainer"], ["onErrorContainer", "errorContainer"]],
+    pairs: [
+      ["error", "onError"],
+      ["onError", "error"],
+      ["errorContainer", "onErrorContainer"],
+      ["onErrorContainer", "errorContainer"],
+    ],
   },
   {
     title: "Surfaces",
-    pairs: [["surfaceDim", "onSurface"], ["surface", "onSurface"], ["surfaceBright", "onSurface"], ["surfaceContainerLowest", "onSurface"], ["surfaceContainerLow", "onSurface"], ["surfaceContainer", "onSurface"], ["surfaceContainerHigh", "onSurface"], ["surfaceContainerHighest", "onSurface"], ["surfaceVariant", "onSurfaceVariant"], ["onSurfaceVariant", "surfaceVariant"]],
+    pairs: [
+      ["surfaceDim", "onSurface"],
+      ["surface", "onSurface"],
+      ["surfaceBright", "onSurface"],
+      ["surfaceContainerLowest", "onSurface"],
+      ["surfaceContainerLow", "onSurface"],
+      ["surfaceContainer", "onSurface"],
+      ["surfaceContainerHigh", "onSurface"],
+      ["surfaceContainerHighest", "onSurface"],
+      ["surfaceVariant", "onSurfaceVariant"],
+      ["onSurfaceVariant", "surfaceVariant"],
+    ],
   },
   {
     title: "Semantic (custom colours, harmonised to the seed)",
-    pairs: [["success", "onSuccess"], ["successContainer", "onSuccessContainer"], ["warning", "onWarning"], ["warningContainer", "onWarningContainer"], ["info", "onInfo"], ["infoContainer", "onInfoContainer"]],
+    pairs: [
+      ["success", "onSuccess"],
+      ["successContainer", "onSuccessContainer"],
+      ["warning", "onWarning"],
+      ["warningContainer", "onWarningContainer"],
+      ["info", "onInfo"],
+      ["infoContainer", "onInfoContainer"],
+    ],
   },
   {
     title: "Outline & inverse",
-    pairs: [["outline"], ["outlineVariant"], ["inverseSurface", "inverseOnSurface"], ["inverseOnSurface", "inverseSurface"], ["inversePrimary"], ["scrim"]],
+    pairs: [
+      ["outline"],
+      ["outlineVariant"],
+      ["inverseSurface", "inverseOnSurface"],
+      ["inverseOnSurface", "inverseSurface"],
+      ["inversePrimary"],
+      ["scrim"],
+    ],
   },
 ];
 
 /** The full M3 colour-role set, in the scheme for the current mode. */
 export const ColorRoles: Story = {
   render: (_args, context) => {
-    const mode = useMode(context);
-    const scheme = (mode === "dark" ? m3DarkScheme : m3LightScheme) as Record<string, string>;
+    const mode = getMode(context);
+    const scheme = (mode === "dark" ? m3DarkScheme : m3LightScheme) as Record<
+      string,
+      string
+    >;
 
     return (
       <M3Frame mode={mode}>
         <Stack spacing={1} sx={{ mb: 4 }}>
           <Typography variant="headlineSmall">Colour roles</Typography>
           <Typography variant="bodyMedium" color="text.secondary">
-            Generated from seed {M3_SEED} with Google&rsquo;s material-color-utilities. Regenerate
-            with <code>npm run gen:m3</code> after changing the seed.
+            Generated from seed {M3_SEED} with Google&rsquo;s
+            material-color-utilities. Regenerate with{" "}
+            <code>npm run gen:m3</code> after changing the seed.
           </Typography>
         </Stack>
 
@@ -138,7 +194,11 @@ export const ColorRoles: Story = {
           {ROLE_GROUPS.map((group) => (
             <Stack key={group.title} spacing={1.5}>
               <Typography variant="titleMedium">{group.title}</Typography>
-              <Stack direction="row" spacing={1.5} sx={{ flexWrap: "wrap", rowGap: 1.5 }}>
+              <Stack
+                direction="row"
+                spacing={1.5}
+                sx={{ flexWrap: "wrap", rowGap: 1.5 }}
+              >
                 {group.pairs.map(([role, on]) => (
                   <RoleSwatch
                     key={role}
@@ -159,15 +219,15 @@ export const ColorRoles: Story = {
 /** The six tonal palettes every role above is sampled from. */
 export const TonalPalettes: Story = {
   render: (_args, context) => {
-    const mode = useMode(context);
+    const mode = getMode(context);
 
     return (
       <M3Frame mode={mode}>
         <Stack spacing={1} sx={{ mb: 4 }}>
           <Typography variant="headlineSmall">Tonal palettes</Typography>
           <Typography variant="bodyMedium" color="text.secondary">
-            Tone 0 is black, 100 is white. Light schemes read roles from the high tones, dark
-            schemes from the low ones.
+            Tone 0 is black, 100 is white. Light schemes read roles from the
+            high tones, dark schemes from the low ones.
           </Typography>
         </Stack>
 
@@ -176,21 +236,23 @@ export const TonalPalettes: Story = {
             <Stack key={name} spacing={1}>
               <Typography variant="titleSmall">{name}</Typography>
               <Stack direction="row" sx={{ flexWrap: "wrap" }}>
-                {Object.entries(tones as Record<string, string>).map(([toneKey, hex]) => (
-                  <Box
-                    key={toneKey}
-                    sx={{
-                      bgcolor: hex,
-                      width: 56,
-                      height: 56,
-                      display: "grid",
-                      placeItems: "center",
-                      color: Number(toneKey) > 55 ? "#000" : "#fff",
-                    }}
-                  >
-                    <Typography variant="labelSmall">{toneKey}</Typography>
-                  </Box>
-                ))}
+                {Object.entries(tones as Record<string, string>).map(
+                  ([toneKey, hex]) => (
+                    <Box
+                      key={toneKey}
+                      sx={{
+                        bgcolor: hex,
+                        width: 56,
+                        height: 56,
+                        display: "grid",
+                        placeItems: "center",
+                        color: Number(toneKey) > 55 ? "#000" : "#fff",
+                      }}
+                    >
+                      <Typography variant="labelSmall">{toneKey}</Typography>
+                    </Box>
+                  ),
+                )}
               </Stack>
             </Stack>
           ))}
@@ -203,7 +265,7 @@ export const TonalPalettes: Story = {
 /** The M3 type scale — five roles at three sizes each. */
 export const TypeScale: Story = {
   render: (_args, context) => {
-    const mode = useMode(context);
+    const mode = getMode(context);
 
     return (
       <M3Frame mode={mode}>
@@ -211,17 +273,20 @@ export const TypeScale: Story = {
           Type scale
         </Typography>
         <Stack spacing={3} divider={<Divider flexItem />}>
-          {(Object.keys(m3TypeScale) as Array<keyof typeof m3TypeScale>).map((key) => {
-            const style = m3TypeScale[key];
-            return (
-              <Stack key={key} spacing={0.5}>
-                <Typography variant="labelSmall" color="text.secondary">
-                  {key} — {style.fontSize} / {style.lineHeight} / {style.fontWeight}
-                </Typography>
-                <Typography variant={key}>The quick brown fox</Typography>
-              </Stack>
-            );
-          })}
+          {(Object.keys(m3TypeScale) as Array<keyof typeof m3TypeScale>).map(
+            (key) => {
+              const style = m3TypeScale[key];
+              return (
+                <Stack key={key} spacing={0.5}>
+                  <Typography variant="labelSmall" color="text.secondary">
+                    {key} — {style.fontSize} / {style.lineHeight} /{" "}
+                    {style.fontWeight}
+                  </Typography>
+                  <Typography variant={key}>The quick brown fox</Typography>
+                </Stack>
+              );
+            },
+          )}
         </Stack>
       </M3Frame>
     );
@@ -231,7 +296,7 @@ export const TypeScale: Story = {
 /** The corner-radius scale, and which components use each step. */
 export const ShapeScale: Story = {
   render: (_args, context) => {
-    const mode = useMode(context);
+    const mode = getMode(context);
     const USED_BY: Record<string, string> = {
       none: "Full-bleed surfaces",
       extraSmall: "Text fields, menus, tooltips",
@@ -249,7 +314,12 @@ export const ShapeScale: Story = {
         </Typography>
         <Stack direction="row" spacing={2} sx={{ flexWrap: "wrap", rowGap: 2 }}>
           {Object.entries(m3Shape).map(([name, radius]) => (
-            <Stack key={name} spacing={1} alignItems="center" sx={{ width: 148 }}>
+            <Stack
+              key={name}
+              spacing={1}
+              alignItems="center"
+              sx={{ width: 148 }}
+            >
               <Box
                 sx={{
                   width: 96,
@@ -262,7 +332,11 @@ export const ShapeScale: Story = {
               <Typography variant="labelSmall" color="text.secondary">
                 {radius === m3Shape.full ? "pill" : `${radius}px`}
               </Typography>
-              <Typography variant="labelSmall" color="text.secondary" align="center">
+              <Typography
+                variant="labelSmall"
+                color="text.secondary"
+                align="center"
+              >
                 {USED_BY[name]}
               </Typography>
             </Stack>
@@ -276,7 +350,7 @@ export const ShapeScale: Story = {
 /** All five M3 button styles, including the two added to MUI's set. */
 export const Buttons: Story = {
   render: (_args, context) => {
-    const mode = useMode(context);
+    const mode = getMode(context);
 
     return (
       <M3Frame mode={mode}>
@@ -284,29 +358,56 @@ export const Buttons: Story = {
           Buttons
         </Typography>
         <Typography variant="bodyMedium" color="text.secondary" sx={{ mb: 3 }}>
-          `tonal` and `elevated` are registered on ButtonPropsVariantOverrides, so they are
-          typed like any built-in variant.
+          `tonal` and `elevated` are registered on ButtonPropsVariantOverrides,
+          so they are typed like any built-in variant.
         </Typography>
 
         <Stack spacing={3}>
-          <Stack direction="row" spacing={2} sx={{ flexWrap: "wrap", rowGap: 2 }}>
+          <Stack
+            direction="row"
+            spacing={2}
+            sx={{ flexWrap: "wrap", rowGap: 2 }}
+          >
             <Button variant="contained">Filled</Button>
             <Button variant="tonal">Tonal</Button>
             <Button variant="elevated">Elevated</Button>
             <Button variant="outlined">Outlined</Button>
             <Button variant="text">Text</Button>
           </Stack>
-          <Stack direction="row" spacing={2} sx={{ flexWrap: "wrap", rowGap: 2 }}>
-            <Button variant="contained" disabled>Filled</Button>
-            <Button variant="tonal" disabled>Tonal</Button>
-            <Button variant="elevated" disabled>Elevated</Button>
-            <Button variant="outlined" disabled>Outlined</Button>
-            <Button variant="text" disabled>Text</Button>
+          <Stack
+            direction="row"
+            spacing={2}
+            sx={{ flexWrap: "wrap", rowGap: 2 }}
+          >
+            <Button variant="contained" disabled>
+              Filled
+            </Button>
+            <Button variant="tonal" disabled>
+              Tonal
+            </Button>
+            <Button variant="elevated" disabled>
+              Elevated
+            </Button>
+            <Button variant="outlined" disabled>
+              Outlined
+            </Button>
+            <Button variant="text" disabled>
+              Text
+            </Button>
           </Stack>
-          <Stack direction="row" spacing={2} alignItems="center" sx={{ flexWrap: "wrap", rowGap: 2 }}>
-            <Button variant="contained" size="small">Small</Button>
+          <Stack
+            direction="row"
+            spacing={2}
+            alignItems="center"
+            sx={{ flexWrap: "wrap", rowGap: 2 }}
+          >
+            <Button variant="contained" size="small">
+              Small
+            </Button>
             <Button variant="contained">Medium</Button>
-            <Button variant="contained" size="large">Large</Button>
+            <Button variant="contained" size="large">
+              Large
+            </Button>
           </Stack>
         </Stack>
       </M3Frame>
@@ -328,9 +429,16 @@ const Sampler = () => (
         <Chip label="tooltip" />
       </Tooltip>
     </Stack>
-    <TextField label="Text field" placeholder="Placeholder" helperText="Helper text" />
+    <TextField
+      label="Text field"
+      placeholder="Placeholder"
+      helperText="Helper text"
+    />
     <Stack direction="row" spacing={2} alignItems="center">
-      <FormControlLabel control={<Checkbox defaultChecked />} label="Checkbox" />
+      <FormControlLabel
+        control={<Checkbox defaultChecked />}
+        label="Checkbox"
+      />
       <FormControlLabel control={<Switch defaultChecked />} label="Switch" />
     </Stack>
     <Alert severity="info">An informational alert.</Alert>
@@ -350,7 +458,7 @@ const Sampler = () => (
 export const VersusLegacy: Story = {
   name: "M3 vs Legacy",
   render: (_args, context) => {
-    const mode = useMode(context);
+    const mode = getMode(context);
     const legacy = mode === "dark" ? legacyDark : legacyLight;
     const m3 = mode === "dark" ? m3DarkTheme : m3Theme;
 
@@ -362,13 +470,24 @@ export const VersusLegacy: Story = {
           minHeight: "100%",
         }}
       >
-        {([
-          ["Legacy", legacy],
-          ["M3", m3],
-        ] as const).map(([label, activeTheme]) => (
+        {(
+          [
+            ["Legacy", legacy],
+            ["M3", m3],
+          ] as const
+        ).map(([label, activeTheme]) => (
           <ThemeProvider key={label} theme={activeTheme}>
-            <Box sx={{ bgcolor: "background.default", color: "text.primary", p: 3 }}>
-              <Paper variant="outlined" sx={{ p: 1, mb: 3, display: "inline-block" }}>
+            <Box
+              sx={{
+                bgcolor: "background.default",
+                color: "text.primary",
+                p: 3,
+              }}
+            >
+              <Paper
+                variant="outlined"
+                sx={{ p: 1, mb: 3, display: "inline-block" }}
+              >
                 <Typography variant="overline">{label}</Typography>
               </Paper>
               <Sampler />

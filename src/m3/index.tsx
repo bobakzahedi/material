@@ -64,9 +64,13 @@ declare module "@mui/material/Typography" {
 }
 
 declare module "@mui/material/styles" {
-  interface TypographyVariants extends Record<keyof typeof m3TypeScale, CSSProperties> {}
-  interface TypographyVariantsOptions
-    extends Partial<Record<keyof typeof m3TypeScale, CSSProperties>> {}
+  interface TypographyVariants extends Record<
+    keyof typeof m3TypeScale,
+    CSSProperties
+  > {}
+  interface TypographyVariantsOptions extends Partial<
+    Record<keyof typeof m3TypeScale, CSSProperties>
+  > {}
 }
 
 // ---------------------------------------------------------------------------
@@ -138,7 +142,8 @@ export const m3DarkTheme = build(m3DarkScheme, "dark");
  * Reads the M3 role set off a theme. Returns `undefined` for the legacy themes,
  * which is the honest answer — they have no M3 roles.
  */
-export const getM3Scheme = (theme: { palette: { m3?: M3Scheme } }) => theme.palette.m3;
+export const getM3Scheme = (theme: { palette: { m3?: M3Scheme } }) =>
+  theme.palette.m3;
 
 export { m3LightScheme, m3DarkScheme, m3Palettes, M3_SEED };
 export { m3Shape, m3State, m3Elevation } from "./shape";

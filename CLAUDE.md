@@ -19,6 +19,8 @@ npm run build-storybook  # Static Storybook build into storybook-static/
 npm run deploy           # build-storybook + publish to GitHub Pages
 npm run release          # build + npm publish --access public
 npm run release:alpha    # build + publish under the `alpha` dist-tag
+npm run format           # prettier --write on src/**/*.{ts,tsx}
+npm run format:check     # prettier --check on src/**/*.{ts,tsx}
 ```
 
 Storybook 10 with the Vite builder. Requires Node >= 20.19 (or >= 22.12), per Vite's engines field.
@@ -26,6 +28,8 @@ Storybook 10 with the Vite builder. Requires Node >= 20.19 (or >= 22.12), per Vi
 There are **no tests** — `npm test` is a placeholder (`echo 'add tests'`). Do not assume a test runner exists.
 
 `tsc` runs in `strict` mode. Two tsconfigs: `tsconfig.json` is the **build** config (emits `es/`, excludes `*.stories.tsx`), and `tsconfig.storybook.json` is the **check-everything** config used by `npm run typecheck` — it adds the stories and `.storybook/` and uses `Bundler` module resolution, which Storybook 10's subpath `exports` require. Storybook itself does not block on type errors; run `npm run typecheck` before pushing.
+
+**Formatting is enforced via a pre-commit hook.** Prettier runs on Prettier's own defaults (no `.prettierrc` — deliberately, to stay decision-free and consistent with manager-ui, which runs on the same defaults) against `src/**/*.{ts,tsx}` (scope narrowed by `.prettierignore` to just that source tree — the rest of the repo, e.g. `tsconfig.json`/`.storybook/`, is intentionally left untouched for now). `npm install` runs `husky` via the `prepare` script, which wires up `.husky/pre-commit` to run `pretty-quick --staged` — new/modified staged source files are auto-formatted at commit time. This is currently the only enforcement (bypassable with `git commit --no-verify`); CI wiring for `format:check` is tracked separately.
 
 ## Architecture & conventions
 

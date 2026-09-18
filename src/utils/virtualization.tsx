@@ -1,9 +1,9 @@
-import * as React from 'react';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import ListSubheader from '@mui/material/ListSubheader';
-import { useTheme } from '@mui/material/styles';
-import { VariableSizeList, ListChildComponentProps } from 'react-window';
-import Typography from '@mui/material/Typography';
+import * as React from "react";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import ListSubheader from "@mui/material/ListSubheader";
+import { useTheme } from "@mui/material/styles";
+import { VariableSizeList, ListChildComponentProps } from "react-window";
+import Typography from "@mui/material/Typography";
 
 const LISTBOX_PADDING = 8; // px
 
@@ -15,7 +15,7 @@ function renderRow(props: ListChildComponentProps) {
     top: (style.top as number) + LISTBOX_PADDING,
   };
 
-  if (dataSet.hasOwnProperty('group')) {
+  if (dataSet.hasOwnProperty("group")) {
     return (
       <ListSubheader key={dataSet.key} component="div" style={inlineStyle}>
         {dataSet.group}
@@ -37,7 +37,7 @@ const OuterElementType = React.forwardRef<HTMLDivElement>((props, ref) => {
   return <div ref={ref} {...props} {...outerProps} />;
 });
 
-function useResetCache(data: any) {
+function useResetCache(data: number) {
   const ref = React.useRef<VariableSizeList>(null);
   React.useEffect(() => {
     if (ref.current != null) {
@@ -62,14 +62,14 @@ export const ListboxComponent = React.forwardRef<
   );
 
   const theme = useTheme();
-  const smUp = useMediaQuery(theme.breakpoints.up('sm'), {
+  const smUp = useMediaQuery(theme.breakpoints.up("sm"), {
     noSsr: true,
   });
   const itemCount = itemData.length;
   const itemSize = smUp ? 36 : 48;
 
   const getChildSize = (child: React.ReactChild) => {
-    if (child.hasOwnProperty('group')) {
+    if (child.hasOwnProperty("group")) {
       return 48;
     }
 
@@ -95,7 +95,7 @@ export const ListboxComponent = React.forwardRef<
           ref={gridRef}
           outerElementType={OuterElementType}
           innerElementType="ul"
-          itemSize={(index: any) => getChildSize(itemData[index])}
+          itemSize={(index: number) => getChildSize(itemData[index])}
           overscanCount={5}
           itemCount={itemCount}
         >
